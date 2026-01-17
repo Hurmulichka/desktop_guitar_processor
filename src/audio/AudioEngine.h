@@ -29,8 +29,8 @@ public:
     void audioDeviceError(const juce::String& errorMessage) override;
     
     // Meter access for UI
-    const Meter& getInputMeter() const { return inputMeter; }
-    const Meter& getOutputMeter() const { return outputMeter; }
+    Meter& getInputMeter() { return inputMeter; }
+    Meter& getOutputMeter() { return outputMeter; }
     
 private:
     ParameterBridge& parameters;

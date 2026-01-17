@@ -10,7 +10,7 @@ class MeterComponent : public juce::Component,
                        private juce::Timer
 {
 public:
-    MeterComponent(const Meter& meter, const juce::String& label);
+    MeterComponent(Meter& meter, const juce::String& label);
     ~MeterComponent() override;
     
     void paint(juce::Graphics& g) override;
@@ -19,7 +19,7 @@ public:
 private:
     void timerCallback() override;
     
-    const Meter& meterSource;
+    Meter& meterSource;
     juce::String labelText;
     
     float displayPeak = 0.0f;

@@ -43,6 +43,7 @@ void AudioEngine::audioDeviceAboutToStart(juce::AudioIODevice* device)
     bypassSmoothCoeff = std::exp(-1.0 / (sampleRate * 0.02));
     bypassCrossfade = parameters.isBypassed() ? 0.0 : 1.0;
     
+    // Enable denormals protection once
     enableDenormalsProtection();
 }
 
@@ -66,15 +67,13 @@ void AudioEngine::audioDeviceIOCallbackWithContext(
     int numSamples,
     const juce::AudioIODeviceCallbackContext& /*context*/)
 {
-    enableDenormalsProtection();
-    
     // Read parameters (lock-free)
     inputGain.setGainDecibels(parameters.getInputGain());
     masterGain.setGainDecibels(parameters.getMasterGain());
     bool muted = parameters.isMuted();
     bool bypassed = parameters.isBypassed();
     
-    // Smooth bypass crossfade
+    // Smooth bypass crossfade target
     double targetCrossfade = bypassed ? 0.0 : 1.0;
     
     // Clear outputs first

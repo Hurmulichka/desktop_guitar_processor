@@ -13,7 +13,8 @@ public:
     
     void reset(double sampleRate, double timeMs = 20.0)
     {
-        currentValue = targetValue;
+        currentValue = 0.0;
+        targetValue = 0.0;
         coefficient = std::exp(-1.0 / (sampleRate * timeMs * 0.001));
     }
     

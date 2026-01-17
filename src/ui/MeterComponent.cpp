@@ -1,6 +1,6 @@
 #include "MeterComponent.h"
 
-MeterComponent::MeterComponent(const Meter& meter, const juce::String& label)
+MeterComponent::MeterComponent(Meter& meter, const juce::String& label)
     : meterSource(meter), labelText(label)
 {
     startTimerHz(30); // Update at 30 Hz
@@ -17,7 +17,7 @@ void MeterComponent::timerCallback()
     displayRMS = meterSource.getRMSLevel();
     
     // Decay for visual effect
-    const_cast<Meter&>(meterSource).decayPeak(DECAY_RATE);
+    meterSource.decayPeak(DECAY_RATE);
     
     repaint();
 }
